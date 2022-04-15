@@ -10,7 +10,7 @@ import util.Vector;
 public class Player extends Character {
 
 	private int lives;
-	//private final List<Item> items;
+	//private final Collection<Item> items;
 	
 	private Player(final PlayerBuilder builder) {
 		super(builder.hitbox, builder.position, builder.health/*, builder.weapon*/);
