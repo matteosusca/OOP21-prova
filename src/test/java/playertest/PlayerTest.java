@@ -7,7 +7,9 @@ import model.character.Player.PlayerBuilder;
 import model.character.tools.health.SimpleHealth;
 import util.Direction;
 import util.Vector;
-
+/**The test class for player.
+ * It will work also witch entity since it's only an instantiable character.
+ * */
 public class PlayerTest {
 	
 	private final Player player;
