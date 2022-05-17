@@ -5,18 +5,19 @@ import java.io.FileNotFoundException;
 import app.MetalShot;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
-import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
-import javafx.stage.Stage;
 /**
  * 
  * 
  */
 public class MainMenu extends StackPane {
 
-	public MainMenu(final Stage primaryStage, final MetalShot viewRef) throws FileNotFoundException {
+    private final MetalShot viewRef;
+    
+	public MainMenu(final MetalShot viewRef) throws FileNotFoundException {
+	    this.viewRef = viewRef;
 		final Image pressedSTRButton = new Image(new FileInputStream("src\\main\\resources\\startButtonPressed.png"));
 		final Image normalSTRButton = new Image(new FileInputStream("src\\main\\resources\\startButton.png"));
 		final Image normalCLSButton = new Image(new FileInputStream("src\\main\\resources\\closeButton.png"));
@@ -38,19 +39,21 @@ public class MainMenu extends StackPane {
 
 			@Override
 			public void handle(final MouseEvent event) {
-				primaryStage.close();
+				viewRef.getStage().close();
 			}
 
 		});
+		final MainMenu mm = this;
 		startButton.setOnMouseReleased(new EventHandler<>() {
 
 			@Override
 			public void handle(final MouseEvent event) {
-				try {
+			    viewRef.getMainScene().setRoot(new SignIn(mm));
+				/*try {
 					viewRef.startGame();
 				} catch (FileNotFoundException e) {
 					e.printStackTrace();
-				}
+				}*/
 			}
 
 		});
@@ -58,10 +61,12 @@ public class MainMenu extends StackPane {
 
             @Override
             public void handle(final MouseEvent event) {
-                System.out.println("option");
-                primaryStage.setScene(new Scene(new Group(), 700, 700));
+                viewRef.getMainScene().setRoot(new Group());
             }
-		    
 		});
+	}
+	
+	public void returnToMM() {
+	    this.viewRef.getMainScene().setRoot(this);
 	}
 }
