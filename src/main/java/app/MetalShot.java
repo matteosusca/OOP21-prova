@@ -22,71 +22,70 @@ import view.menu.MainMenu;
  */
 public final class MetalShot extends Application {
 
-	private Controller controller;
-	private Group mainGroup;
-	private BulletsView bulletsView;
-	private Stage primaryStage;
-	private MainMenu mainMenu;
-	
-	@Override
-	public void start(final Stage primaryStage) throws Exception {
-		
-		this.primaryStage = primaryStage;
+    private Controller controller;
+    private Group mainGroup;
+    private BulletsView bulletsView;
+    private Stage primaryStage;
+    private MainMenu mainMenu;
 
-		this.mainMenu = new MainMenu(primaryStage, this);
+    @Override
+    public void start(final Stage primaryStage) throws Exception {
 
-		var s = new Scene(mainMenu, 700, 700);
+        this.primaryStage = primaryStage;
 
-		primaryStage.setScene(s);
+        this.mainMenu = new MainMenu(primaryStage, this);
 
-		primaryStage.setTitle("Hello");
-		primaryStage.show();
-	}
+        final var s = new Scene(mainMenu, 700, 700);
 
-	public void startGame() throws FileNotFoundException {
-		this.mainMenu.setVisible(false);
-		
-		controller = new Controller(this);
+        primaryStage.setScene(s);
 
-		mainGroup = new Group();
+        primaryStage.setTitle("Hello");
+        primaryStage.show();
+    }
 
-		bulletsView = new BulletsView();
-		
-		primaryStage.getScene().setOnKeyPressed(new EventHandler<KeyEvent>() {
+    public void startGame() throws FileNotFoundException {
 
-			@Override
-			public void handle(final KeyEvent event) {
-				controller.keyPressed(event.getCode());
-			}
+        controller = new Controller(this);
 
-		});
+        mainGroup = new Group();
 
-		controller.gameStart();
-	}
-	
-	public void displayBullets(final Map<Vector, Direction> bullets) {
-		this.mainGroup.getChildren().removeAll(this.bulletsView.getImageViewList());
-		this.bulletsView.updateBullets(bullets.keySet().stream().collect(Collectors.toList()));
-		this.mainGroup.getChildren().addAll(this.bulletsView.getImageViewList());
-	}
+        bulletsView = new BulletsView();
 
-	public static void run(final String... args) {
-		launch();
-	}
+        final Scene scene = new Scene(mainGroup, 700, 700);
+        primaryStage.setScene(scene);
+        primaryStage.getScene().setOnKeyPressed(new EventHandler<KeyEvent>() {
 
-	/**
-	 * TODO: write javadoc
-	 * 
-	 * @author Andrea Biagini
-	 *
-	 */
-	public static final class Main {
-		private Main() {
-			// the constructor will never be called directly.
-		}
+            @Override
+            public void handle(final KeyEvent event) {
+                controller.keyPressed(event.getCode());
+            }
 
-		public static void main(final String... args) {
-			Application.launch(MetalShot.class, args);
-		}
-	}
+        });
+
+        controller.gameStart();
+    }
+
+    public void displayBullets(final Map<Vector, Direction> bullets) {
+        this.mainGroup.getChildren().removeAll(this.bulletsView.getImageViewList());
+        this.bulletsView.updateBullets(bullets.keySet().stream().collect(Collectors.toList()));
+        this.mainGroup.getChildren().addAll(this.bulletsView.getImageViewList());
+    }
+
+    public static void run(final String... args) {
+        launch();
+    }
+
+    /**
+     * TODO: write javadoc
+     *
+     */
+    public static final class Main {
+        private Main() {
+            // the constructor will never be called directly.
+        }
+
+        public static void main(final String... args) {
+            Application.launch(MetalShot.class, args);
+        }
+    }
 }
