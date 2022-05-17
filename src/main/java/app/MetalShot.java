@@ -27,17 +27,18 @@ public final class MetalShot extends Application {
     private BulletsView bulletsView;
     private Stage primaryStage;
     private MainMenu mainMenu;
+    private Scene mainScene;
 
     @Override
     public void start(final Stage primaryStage) throws Exception {
 
         this.primaryStage = primaryStage;
 
-        this.mainMenu = new MainMenu(primaryStage, this);
+        this.mainMenu = new MainMenu(this);
 
-        final var s = new Scene(mainMenu, 700, 700);
+        this.mainScene = new Scene(mainMenu, 700, 700);
 
-        primaryStage.setScene(s);
+        primaryStage.setScene(mainScene);
 
         primaryStage.setTitle("Hello");
         primaryStage.show();
@@ -51,8 +52,7 @@ public final class MetalShot extends Application {
 
         bulletsView = new BulletsView();
 
-        final Scene scene = new Scene(mainGroup, 700, 700);
-        primaryStage.setScene(scene);
+        this.mainScene.setRoot(mainGroup);
         primaryStage.getScene().setOnKeyPressed(new EventHandler<KeyEvent>() {
 
             @Override
@@ -69,6 +69,14 @@ public final class MetalShot extends Application {
         this.mainGroup.getChildren().removeAll(this.bulletsView.getImageViewList());
         this.bulletsView.updateBullets(bullets.keySet().stream().collect(Collectors.toList()));
         this.mainGroup.getChildren().addAll(this.bulletsView.getImageViewList());
+    }
+    
+    public Scene getMainScene() {
+        return this.mainScene;
+    }
+    
+    public Stage getStage() {
+        return this.primaryStage;
     }
 
     public static void run(final String... args) {
