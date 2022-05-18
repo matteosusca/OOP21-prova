@@ -11,8 +11,15 @@ import javafx.scene.input.MouseEvent;
  * 
  */
 public class CustomButton extends Button {
+    
+    private Image selected;
+    private Image unselected;
+    private ImageView iv;
+    
 	public void updateImages(final Image selected, final Image unselected) {
-        final ImageView iv = new ImageView(unselected);
+	    this.selected = selected;
+	    this.unselected = unselected;
+        this.iv = new ImageView(unselected);
         this.getChildren().add(iv);
         this.setStyle("-fx-background-color: transparent;");
         this.setScaleX(1.5);
@@ -21,17 +28,25 @@ public class CustomButton extends Button {
 
 			@Override
 			public void handle(final MouseEvent event) {
-				iv.setImage(selected);
+				setSelectedImg();
 			}
         });
         this.setOnMouseReleased(new EventHandler<>() {
 
 			@Override
 			public void handle(final MouseEvent event) {
-				iv.setImage(unselected);
+				setUnselectedImg();
 			}
         });
 
         super.setGraphic(iv);
+    }
+	
+	public void setSelectedImg() {
+	    this.iv.setImage(selected);
+	}
+	
+	public void setUnselectedImg() {
+        this.iv.setImage(unselected);
     }
 }

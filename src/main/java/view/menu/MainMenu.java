@@ -8,6 +8,7 @@ import javafx.scene.Group;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
+import util.UserData;
 /**
  * 
  * 
@@ -15,6 +16,10 @@ import javafx.scene.layout.StackPane;
 public class MainMenu extends StackPane {
 
     private final MetalShot viewRef;
+    private SignIn signInScreen = new SignIn(this);
+    private final CustomButton startButton = new CustomButton();
+    private final CustomButton closeButton = new CustomButton();
+    private final CustomButton optionButton = new CustomButton();
     
 	public MainMenu(final MetalShot viewRef) throws FileNotFoundException {
 	    this.viewRef = viewRef;
@@ -24,9 +29,7 @@ public class MainMenu extends StackPane {
 		final Image pressedCLSButton = new Image(new FileInputStream("src\\main\\resources\\closeButtonPressed.png"));
         final Image normalOPTButton = new Image(new FileInputStream("src\\main\\resources\\optionButton.png"));
         final Image pressedOPTButton = new Image(new FileInputStream("src\\main\\resources\\optionButtonPressed.png"));
-		final CustomButton startButton = new CustomButton();
-		final CustomButton closeButton = new CustomButton();
-		final CustomButton optionButton = new CustomButton();
+		
 		optionButton.updateImages(pressedOPTButton, normalOPTButton);
 		closeButton.updateImages(pressedCLSButton, normalCLSButton);
 		startButton.updateImages(pressedSTRButton, normalSTRButton);
@@ -43,17 +46,11 @@ public class MainMenu extends StackPane {
 			}
 
 		});
-		final MainMenu mm = this;
 		startButton.setOnMouseReleased(new EventHandler<>() {
 
 			@Override
 			public void handle(final MouseEvent event) {
-			    viewRef.getMainScene().setRoot(new SignIn(mm));
-				/*try {
-					viewRef.startGame();
-				} catch (FileNotFoundException e) {
-					e.printStackTrace();
-				}*/
+			    viewRef.getMainScene().setRoot(signInScreen);
 			}
 
 		});
@@ -67,6 +64,15 @@ public class MainMenu extends StackPane {
 	}
 	
 	public void returnToMM() {
+	    this.startButton.setUnselectedImg();
 	    this.viewRef.getMainScene().setRoot(this);
+	}
+	
+	public UserData getUserData() {
+	    return this.signInScreen.getUserData();
+	}
+	
+	public void startGame() throws FileNotFoundException {
+	    viewRef.startGame();
 	}
 }

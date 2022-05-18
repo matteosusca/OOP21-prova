@@ -1,16 +1,21 @@
 package view.menu;
 
+import java.io.FileNotFoundException;
+
 import javafx.event.EventHandler;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
+import util.UserData;
 /**
  * 
  * 
  */
 public class SignIn extends StackPane {
 
+    private UserData userData;
+    
     public SignIn(final MainMenu mm) {
         final Label label = new Label("Choose your name:");
         final TextField txtF = new TextField();
@@ -29,10 +34,15 @@ public class SignIn extends StackPane {
 
             @Override
             public void handle(final MouseEvent event) {
-                if (txtF.getText() == "") {
+                if (txtF.getText().isBlank()) {
                     System.out.println("Non fare il pirla");
                 } else {
-                    System.out.println(txtF.getText());
+                    userData = new UserData(txtF.getText());
+                    try {
+                        mm.startGame();
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
         });
@@ -43,5 +53,9 @@ public class SignIn extends StackPane {
                 mm.returnToMM();
             }
         });
+    }
+    
+    public UserData getUserData() {
+        return this.userData;
     }
 }
