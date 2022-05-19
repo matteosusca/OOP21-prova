@@ -1,5 +1,6 @@
 package app;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -7,8 +8,11 @@ import java.util.stream.Collectors;
 import controller.Controller;
 import javafx.application.Application;
 import javafx.event.EventHandler;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import util.Direction;
@@ -32,13 +36,15 @@ public final class MetalShot extends Application {
     @Override
     public void start(final Stage primaryStage) throws Exception {
 
+        final Parent root = FXMLLoader.load(getClass().getResource("/MainMenu.fxml"));
+        primaryStage.setScene(new Scene(root));
         this.primaryStage = primaryStage;
 
         this.mainMenu = new MainMenu(this);
 
-        this.mainScene = new Scene(mainMenu, 700, 700);
+        /*this.mainScene = new Scene(mainMenu, 700, 700);
 
-        primaryStage.setScene(mainScene);
+        primaryStage.setScene(mainScene);*/
 
         primaryStage.setTitle("Hello");
         primaryStage.show();

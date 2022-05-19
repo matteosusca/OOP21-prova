@@ -1,0 +1,7 @@
+.rectangularButton {
+	-fx-shape: "M 150 250 L 500 250 L 500 350 L 150 350 L 150 250";
+	-fx-padding: 0;
+    -fx-border: none;
+	-fx-background: none;
+	-fx-focus-color: none;
+}
